@@ -2,7 +2,6 @@
 *hirosima
 *hirosima.pub
 .env
-config_data/config.py
  __pycache__/
 .idea/
 /venv/
