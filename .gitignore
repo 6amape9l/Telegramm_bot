@@ -1,8 +1,8 @@
 # created by virtualenv automatically
 *hirosima
 *hirosima.pub
+.env
 config_data/config.py
  __pycache__/
- .env
 .idea/
 /venv/
