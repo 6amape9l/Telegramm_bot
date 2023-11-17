@@ -1,8 +1,8 @@
 from aiogram import Bot, Dispatcher, F
-from aiogram.filters import Command, CommandStart
-from aiogram.types import Message
+from aiogram.filters import Command, CommandStart, ChatMemberUpdatedFilter, KICKED
+from aiogram.types import Message, ChatMemberUpdated
 
-import config as con
+from config_data import config as con
 import random
 
 
@@ -42,6 +42,12 @@ async def process_start_command(message: Message):
             'total_games': 0,
             'wins': 0
         }
+
+
+# Этот хэндлер будет срабатывать на блокировку бота пользователем
+@dp.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=KICKED))
+async def process_user_blocked_bot(event: ChatMemberUpdated):
+    print(f'Пользователь {event.from_user.id} заблокировал бота')
 
 
 # Этот хэндлер будет срабатывать на команду "/help"
@@ -162,6 +168,7 @@ async def process_other_answers(message: Message):
             'Я довольно ограниченный бот, давайте '
             'просто сыграем в игру?'
         )
+
 
 if __name__ == '__main__':
     dp.run_polling(bot)

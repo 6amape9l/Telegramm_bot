@@ -1,28 +1,19 @@
-import requests
-import time
-import config
+import os
 
+from environs import Env
 
+env = Env()  # Создаем экземпляр класса Env
+env.read_env()  # Методом read_env() читаем файл .env и загружаем из него переменные в окружение
 
+bot_token = env('BOT_TOKEN')  # Получаем и сохраняем значение переменной окружения в переменную bot_token
+admin_id = env.int('ADMIN_ID')  # Получаем и преобразуем значение переменной окружения к типу int,
+# затем сохраняем в переменной admin_id
 
-offset = -2
-updates: dict
+# Выводим значения переменных в терминал
+print(bot_token)
+print(admin_id)
+print()
 
-
-def do_something() -> None:
-    print('Был апдейт')
-
-
-while True:
-    start_time = time.time()
-    updates = requests.get(f'{config.API_URL}{config.BOT_TOKEN}/getUpdates?offset={offset + 1}&timeout={config.POLLING_TIME}').json()
-
-    if updates['result']:
-        for result in updates['result']:
-
-            offset = result['update_id']
-            do_something()
-
-    time.sleep(3)
-    end_time = time.time()
-    print(f'Время между запросами к Telegram Bot API: {end_time - start_time}')
+# Убедимся также, что переменные есть в окружении
+print(os.getenv('BOT_TOKEN'))
+print(os.getenv('ADMIN_ID'))
