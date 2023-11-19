@@ -14,6 +14,7 @@ class DatabaseConfig:
 @dataclass
 class TgBot:
     token: str            # Токен для доступа к телеграм-боту
+    skip_updates: bool
     admin_ids: list[int]  # Список id администраторов бота
 
 
@@ -31,6 +32,7 @@ def load_config(path: str | None = None) -> Config:
     return Config(
         tg_bot=TgBot(
             token=env('BOT_TOKEN'),
+            skip_updates=env('SKIP_UPDATES'),
             admin_ids=list(map(int, env.list('ADMIN_IDS')))
         ),
         db=DatabaseConfig(
